@@ -9,6 +9,10 @@
     "start": "nodemon index.js",
       "build": "echo 'No build step required' && exit 0"
   },
+  "engines": {
+  "node": "18.x"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
