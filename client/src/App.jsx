@@ -10,11 +10,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Home />} ></Route>
-        <Route path="/signup" element={<Signup />} ></Route>
+      <Route path="/home" element={<Home />} ></Route>
+        <Route path="/" element={<Signup />} ></Route>
         <Route path="/login" element={<Login />} ></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />} ></Route>
-        <Route path="/resetPassword/:token" element={<ResetPassword/>} ></Route>
+        <Route path="/reset-password/:token" element={<ResetPassword/>} ></Route>
         <Route path="/dashboard" element={<Dashboard/>} ></Route>
       </Routes>
     </BrowserRouter>

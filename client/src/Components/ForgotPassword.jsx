@@ -1,52 +1,59 @@
-import React, { useState } from 'react'
-import '../App.css'
-import Axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import '../App.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        Axios.post('http://localhost:3000/auth/forgot-password', {
-            email,
-        }).then(response => {
-            if (response.data.status) {
-                alert("Check your email for reset password link")
-                navigate('/login')
-            }
-            
+    try {
+      const response = await axios.post('http://localhost:3000/auth/forgot-password', { email });
+      if (response.data.status) {
+        setMessage("Check your email for the reset password link");
+        setTimeout(() => navigate('/login'), 3000);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage(error.response?.data?.message || "An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        }).catch(err => {
-            console.log(err)
-        })
-    };
+  return (
+    <div className='sign-up-container'>
+      <form className='sign-up-form' onSubmit={handleSubmit}>
+        <h2>Forgot Password</h2>
 
-    return (
-        <div className='sign-up-container'>
+        <label htmlFor='email'>Email:</label>
+        <input
+          type='email'
+          id='email'
+          autoComplete='off'
+          placeholder='Email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-            <form className='sign-up-form' onSubmit={handleSubmit}>
-                <h2>Forgot Password</h2>
+        <button type='submit' disabled={isLoading}>
+          {isLoading ? 'Sending...' : 'Send Reset Link'}
+        </button>
 
+        {message && <p className={message.includes("Check your email") ? "success-message" : "error-message"}>{message}</p>}
+      </form>
+    </div>
+  );
+};
 
-                <label htmlFor='email'>Email:</label>
-                <input
-                    type='email'
-                    autoComplete='off'
-                    placeholder='Email'
-                    onChange={(e) => setEmail(e.target.value)} />
+export default ForgotPassword;
 
-
-
-                <button type='submit'>Send</button>
-
-
-            </form>
-        </div>
-    )
-}
-
-export default ForgotPassword

@@ -4,7 +4,7 @@ import Axios from 'axios'
 import {Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate=useNavigate()
@@ -13,11 +13,11 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         Axios.post('http://localhost:3000/auth/login', {
-            email,
+            username,
             password,
         }).then(response=>{
             if(response.data.status){
-                navigate('/')
+                navigate('/home')
             }
            
         }).catch(err=>{
@@ -32,12 +32,13 @@ const Login = () => {
                 <h2>Login</h2>
                 
 
-                <label htmlFor='email'>Email:</label>
+                <label htmlFor='username'>Username:</label>
                 <input
-                    type='email'
-                    autoComplete='off'
-                    placeholder='Email'
-                    onChange={(e) => setEmail(e.target.value)} />
+                            type='text'
+                            id='username'
+                            placeholder='Username'
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
 
                 <label htmlFor='password'>Password:</label>
                 <input
@@ -47,7 +48,7 @@ const Login = () => {
 
                 <button type='submit'>Login</button>
                 <Link to="/forgotPassword">Forgot Password?</Link>
-                <p>Don't Have Account? <Link to="/signup">Sign Up</Link></p>
+                <p>Don't Have Account? <Link to="/">Sign Up</Link></p>
 
             </form>
         </div>
