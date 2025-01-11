@@ -1,5 +1,5 @@
 import express from "express";
-import bcryt from "bcrypt";
+import bcryt from "bcryptjs";
 const router = express.Router();
 import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
