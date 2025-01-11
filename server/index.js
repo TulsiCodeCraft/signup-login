@@ -21,12 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', UserRouter);
 
-mongoose.connect('mongodb://127.0.0.1:27017/authentication', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('Failed to connect to MongoDB:', err));
+mongoose.connect('mongodb://127.0.0.1:27017/authentication')
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
